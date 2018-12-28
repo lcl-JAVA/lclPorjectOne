@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.TestDao">
+	<!-- 查询所有数据 -->
+	<select id="findMapPoint"
+		resultType="Map">
+		select *
+		from 
+			map
+			where 1 = 1
+		<if test=" sheng != '' and sheng != null ">
+			and province_code = #{sheng}
+		</if>
+		<if test=" shi != '' and shi != null ">
+			and city_code = #{shi}
+		</if>
+		<if test=" qu != '' and qu != null ">
+			and area_code = #{qu}
+		</if>
+		<if test=" jd != '' and jd != null ">
+			and street_code = #{jd}
+		</if>
+	</select>
+	
+	<select id="findMapPointByName" parameterType="String"
+		resultType="Map">
+		select *
+		from 
+			map
+			where 1 = 1
+		<if test=" name != '' and name != null ">
+			and name = #{ name}
+		</if>
+	</select>
+	
+	<insert id="insertMapPiont" parameterType="Map">
+		insert into map (id,zb,name,c_name,c_point,province_code,city_code,area_code,
+		street_code,lx,wgy_id) values(#{id},#{zb},#{name},#{c_name},#{c_point},#{sheng},#{shi},
+		#{qu},#{jd},#{lx},#{wgy_id})
+	</insert>
+	<update id="editMapPoint" parameterType="Map">
+		update map set 
+		zb=#{zb},
+		name=#{name},
+		c_point=#{c_point},
+		c_name=#{c_name},
+		province_code=#{sheng},
+		city_code=#{shi},
+		area_code=#{qu},
+		street_code=#{jd},
+		lx=#{lx},
+		wgy_id=#{wgy_id}
+		where id = #{id}
+	</update>
+	
+	<select id="selectMapPiont" resultType="Map" parameterType="String">
+		select *
+		from 
+			map
+		where 1=1
+		<if test=" name != '' and name != null ">
+			and name like '%${ name}%'
+		</if>
+		<if test=" sheng != '' and sheng != null ">
+			and province_code = #{sheng}
+		</if>
+		<if test=" shi != '' and shi != null ">
+			and city_code = #{shi}
+		</if>
+		<if test=" qu != '' and qu != null ">
+			and area_code = #{qu}
+		</if>
+		<if test=" jd != '' and jd != null ">
+			and street_code = #{jd}
+		</if>
+		<if test=" lx != '' and lx != null ">
+			and lx = #{lx}
+		</if>
+	</select>
+	<delete id="delectMapPiont" parameterType="String">
+		delete from map where id = #{id}
+	</delete>
+	
+	
+	<select id="selectMapLx" resultType="Map" parameterType="String">
+		select lx,count(lx) zs  from map   where street_code=#{street_code} group by lx
+	</select>
+	
+	<select id="selectXqById" resultType="Map" parameterType="String">
+		SELECT
+			T.NAME,
+			T.PROVINCE_CODE,
+			T.CITY_CODE,
+			T.AREA_CODE,
+			T.STREET_CODE,
+			T.LX,
+			T.C_NAME 
+		FROM
+			MAP T
+		WHERE T.ID = #{id}
+		
+	</select>
+</mapper>
+
+
+
+
+
+
+
